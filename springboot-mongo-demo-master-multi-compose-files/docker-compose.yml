@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  springboot:
+    build: .
+    image: dockerhandson/springboot-mongo-demo:latest
+    #image: registry.gitlab.com/idgst/springboot-mongo-demo:latest
+    restart: always
+    ports:
+      - 8182:8080
+    working_dir: /opt/app
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    volumes:
+      - data:/data/db
+      - data-bkp:/data/bkp
+    restart: always
+volumes:
+    data:
+    data-bkp:

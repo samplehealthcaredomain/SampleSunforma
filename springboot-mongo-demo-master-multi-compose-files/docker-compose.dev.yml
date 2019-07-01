@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  springboot:
+    environment:
+       MONGO_URL: DEVMONGODBHOST:PORT
+       MYSQL_DATABASE: devdb
+       MONGO_USER: dev
+       MONGO_PASSWORD: devpassword
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  mongo:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+# deploy
+# Specify configuration related to the deployment and running of services. This only takes effect when deploying to a swarm with 
+# docker stack deploy, and is ignored by docker-compose up and docker-compose run.
+# docker stack deploy --compose-file docker-compose.yml --compose-file docker-dev.yml stackdemo
+# Bring the stack down with docker stack rm:
+# $ docker stack rm stackdemo
